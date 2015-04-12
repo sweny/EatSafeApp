@@ -40,6 +40,7 @@ public class RegistrationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
+		setIbRegister();
     }
 
     private void setIbRegister(){
