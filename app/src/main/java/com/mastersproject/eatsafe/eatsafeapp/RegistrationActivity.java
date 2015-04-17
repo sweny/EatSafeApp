@@ -40,26 +40,26 @@ public class RegistrationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
-		setIbRegister();
+        setIbRegister();
     }
 
     private void setIbRegister(){
         ibRegister = (ImageButton) findViewById(R.id.idRegister);
-
         ibRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                etUsername  = (EditText)    findViewById(R.id.etUsername);
+                etPassword  = (EditText)    findViewById(R.id.etPassword);
+                etConfirmPassword = (EditText) findViewById(R.id.etConfirmPassword);
                 username        = etUsername.getText()+"";
                 password        = etPassword.getText()+"";
                 confirmPassword = etConfirmPassword.getText()+"";
-                _("username:"+username);
-                _("password:"+password);
+
                 if (username.length() == 0 || password.length() == 0 || confirmPassword.length() ==0) {
-                    Toast.makeText(RegistrationActivity.this, "Username or Password/Confirm Password cannot be blank!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, StringValues.USERNAME_PASS_BLANK_REG, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (!password.equals(confirmPassword)) {
-                    Toast.makeText(RegistrationActivity.this, "Password must be equal to Confirm Password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, StringValues.PASS_CONFIRM_EQUAL, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 List<NameValuePair> params = new ArrayList<>();
@@ -81,7 +81,7 @@ public class RegistrationActivity extends ActionBarActivity {
                             startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
                             finish();
                         }
-                        Toast.makeText(getApplication(), jsonString, Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistrationActivity.this, jsonString, Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -103,17 +103,14 @@ public class RegistrationActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     private void _(String s){
-        Log.d("Eat Safe Application", "LoginActivity" + "#######" + s);
+        Log.d("Eat Safe Application", "RegistrationActivity" + "#######" + s);
     }
-
 }

@@ -47,6 +47,7 @@ public class LoginActivity extends ActionBarActivity {
         //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         //getActionBar().hide();
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
+        sr = new ServerConnectivity();
         setContentView(R.layout.activity_login);
         setLoginButton();
         setTvSignUp();
@@ -67,13 +68,14 @@ public class LoginActivity extends ActionBarActivity {
                 _("username:" + username);
                 _("password:" + password);
                 if (username.length() == 0 || password.length() == 0) {
-                    Toast.makeText(LoginActivity.this, "Username or Password cannot be blank!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, StringValues.USERNAME_PASS_BLANK, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("username", username));
                 params.add(new BasicNameValuePair("password", password));
-                sr = new ServerConnectivity();
+
+
                 JSONObject json = sr.getJSON(StringValues.LOGIN_URL, params);
                 if (json != null) {
                     try {
@@ -89,7 +91,7 @@ public class LoginActivity extends ActionBarActivity {
                             startActivity(new Intent(LoginActivity.this, ScanActivity.class));
                             finish();
                         }
-                        Toast.makeText(getApplication(), jsonString, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, jsonString, Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

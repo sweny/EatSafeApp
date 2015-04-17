@@ -37,7 +37,6 @@ public class ServerConnectivity {
 
     public JSONObject getJSONFromUrl(String url, List<NameValuePair> params) {
 
-
         try {
 
             DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -84,7 +83,7 @@ public class ServerConnectivity {
     }
     JSONObject jobj;
     public JSONObject getJSON(String url, List<NameValuePair> params) {
-
+        Log.d("","coming here!");
         Params param = new Params(url,params);
         Request myTask = new Request();
         try{
