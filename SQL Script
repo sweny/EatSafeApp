@@ -1,0 +1,7 @@
+create database eatSafe;
+create table users (UserId int Auto_increment,
+Username varchar(255) Unique Not Null,
+Password varchar (255) Not Null,
+LastName varchar(255),
+FirstName varchar(255),
+Primary key(UserId));
