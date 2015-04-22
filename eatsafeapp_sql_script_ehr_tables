@@ -1,0 +1,77 @@
+/*
+SQLyog Ultimate v10.00 Beta1
+MySQL - 5.6.21-log : Database - eatsafeapp
+*********************************************************************
+*/
+
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`eatsafeapp` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `eatsafeapp`;
+
+/*Table structure for table `avoidable_food_items` */
+
+DROP TABLE IF EXISTS `avoidable_food_items`;
+
+CREATE TABLE `avoidable_food_items` (
+  `food_item_id` int(11) NOT NULL AUTO_INCREMENT,
+  `foot_item_name` varchar(254) DEFAULT NULL,
+  `reason_to_avoid` varchar(254) DEFAULT NULL,
+  `keywords` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`food_item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+/*Data for the table `avoidable_food_items` */
+
+insert  into `avoidable_food_items`(`food_item_id`,`foot_item_name`,`reason_to_avoid`,`keywords`) values (1,'synthetic trans fat','they promote inflammation, which is hallmark of most chronic and serious diseases','inflammation,ischemic storkes, cancer, diabetes, reproduction problem'),(2,'monosodium glutamate (MSG)','MSG is an excitotoxin, which means it overexcites your cells to the point of damage or death, causing brain dysfunction and damage to varying degrees -- and potentially even triggering or worsening learning disabilities, Alzheimer\'s disease, Parkinson\'s ','alzheimer, parkinson, lou gehrig\'s disease'),(3,'High Fructose Corn Syrup','fructose ends up taxing and damaging your liver in the same way alcohol and other toxins do. And just like alcohol, fructose is metabolized directly into fat – it just gets stored in your fat cells, which leads to mitochondrial malfunction, obesity and o','obesity, heart diseases, diabetes, '),(4,'Butylated hydroxyanisole (BHA) ','Preservatives lengthen the shelf-life of foods, increasing manufacturers’ profits – at your expense, since most are linked to health problems such as cancer, allergic reactions and more','cancer, allergic reactions'),(5,'butylated hydrozyttoluene (BHT)','A preservative that affect the neurological system of your brain, alter behavior and have the potential to cause cancer','cancer'),(6,'Tertiary butylhydroquinone(TBHQ)','It is a chemical preservative so deadly that just five grams can kill you',NULL),(7,'sodium benzoate','This preservative, found in many soft drinks, fruit juices and salad dressings – has been found to cause children to become measurably more hyperactive and distractible','hyperactive, distractible'),(8,'Sodium nitrite','a commonly used preservative in hot dogs, deli meats and bacon, has been linked to higher rates of colorectal, stomach and pancreatic cancers','colorectal, stomach cancer, pancreatic cancer'),(9,'Artificial Colors','Nine of the food dyes currently approved for use in the US are linked to health issues ranging from cancer and hyperactivity to allergy-like reactions.','cancer, hyperactivity, brain tumors, hypersensitivity'),(10,'Artificial Flavors','A few of the unnatural additives, like diacetyl, often used as a utter flavoring in microwave popcorn, has several concerning properties for brain health and may trigger Alzheimer’s disease','alzheimer'),(11,'Artificial Sweeteners','Experiments have found that sweet taste, regardless of its caloric content, enhances your appetite, and consuming artificial sweeteners has been shown to lead to even greater weight gain than consuming sugar. Aspartame has been found to have the most pro','obesity, weight gain, toxic, inflammatory bowel diesease, '),(12,'trans fat','trans fats are twice as dangerous for your heart as saturated fat, and cause an estimated 30,000 to 100,000 premature heart disease deaths each year.','heart diseases, cholestrol, heart diseases, diabetes, obesity'),(13,'refined grains','refined grains such as white bread, rolls, sugary low-fiber cereal, white rice, or white pasta over whole grains can boost your heart attack risk by up to 30 percent\r\n\r\nRead more: http://www.rd.com/health/diet-weight-loss/4-most-harmful-ingredients-in-pa','heart diseases, high blood pressure, heart attack, diabetes, belly fat, '),(14,'sodium sulfite','It can cause dangerous reactions in people sensitive or allergic to it. It has been linked by some to asthma, rashes, headaches, and breathing problems – but that might just be the wine. It induced cell degranulation and oxidant stress. ','oxidant stress, asthma, rashes, headaches, breathing problems'),(15,'sulfur dioxide ','While no definitive study has linked their inclusion in food to negative health effects it is feared in foods because as a gas, inhaling too much can cause conjuctivitis, bronchitis, emphysema, bronchial asthma, and potentially cardiovascular disease','conjuctivitis, bronchitis, emphysema, bronchial asthma, cardiovascular diseases'),(16,'potassium bromate','Used to increase the volume of bread products, this additive has been proven to cause cancer in animals.','cancer, '),(17,'enriched wheat','It is refined flour with most of the key nutrients stripped out ',NULL),(18,'Aspartame','The sale of aspartame, with only four calories per gram and 200 times sweeter than sugar, is sold under the trademarks NutraSweet and Equal. Results indicate that aspartame is a multi-potential carcinogen, even consumed daily at 20 milligrams per kilogra','carcinogen, obesity '),(19,'soy',' Soy protein, soy isolate, and soy oil are present in about 60 percent of the foods on the market and have been shown to impair fertility and affect estrogen in women, lower sex drive, and trigger puberty early in children. Soy can also add to the imbala','infertility, lower sex drive '),(20,'Potassium Sorbate','As one of the most prolific preservatives in the food industry, it is difficult to find an ice cream without potassium sorbate. However, it is not only recommended to avoid this chemical, it\'s a necessity to eliminate it from our foods. It is carcinogeni','carcinogenic, toxic, ');
+
+/*Table structure for table `ehr_allergy_table` */
+
+DROP TABLE IF EXISTS `ehr_allergy_table`;
+
+CREATE TABLE `ehr_allergy_table` (
+  `allergy_id` int(11) NOT NULL AUTO_INCREMENT,
+  `allergy_name` varchar(254) DEFAULT NULL,
+  `allergy_category` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`allergy_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+
+/*Data for the table `ehr_allergy_table` */
+
+insert  into `ehr_allergy_table`(`allergy_id`,`allergy_name`,`allergy_category`) values (1,'almond','nuts and seeds'),(2,'cashew','nuts and seeds'),(3,'cocoa','nuts and seeds'),(4,'coconut','nuts and seeds'),(5,'pecan','nuts and seeds'),(6,'hazelnut','nuts and seeds'),(7,'sesame','nuts and seeds'),(8,'walnut','nuts and seeds'),(9,'peanut','nuts and seeds'),(10,'groundnut','nuts and seeds'),(11,'wheat','cereals and grains'),(12,'barley','cereals and grains'),(13,'maize','cereals and grains'),(14,'oats','cereals and grains'),(15,'corn','cereals and grains'),(16,'rice ','cereals and grains'),(17,'rice ','cereals and grains'),(18,'chickpea, garbanzo','legumes'),(19,'soybean, soya ','legumes'),(20,'lentil','legumes'),(21,'apple','fruit'),(22,'apricot','fruit'),(23,'banana','fruit'),(24,'cherry','fruit'),(25,'coconut','fruit'),(26,'date','fruit'),(27,'fig','fruit'),(28,'grape','fruit'),(29,'kiwi ','fruit'),(30,'mango','fruit'),(31,'peach','fruit'),(32,'pineapple','fruit'),(33,'orange','fruit'),(34,'strawberry','fruit'),(35,'tomato','fruit '),(36,'avocado','vegetable'),(37,'bell pepper','vegetable'),(38,'cabbage','vegetable'),(39,'carrot','vegetable'),(40,'garlic','vegetable'),(41,'lettuce','vegetable'),(42,'potato','vegetable'),(44,'lobster','shellfish and snails'),(45,'shrimp','shellfish and snails'),(46,'prawn','shellfish and snails'),(47,'snail','shellfish and snails'),(48,'salmon','fish'),(49,'tuna','fish'),(50,'cod','fish '),(51,'milk','dairy products'),(52,'egg','dairy products'),(53,'butter','dairy products'),(54,'yoghurt','dairy products'),(55,'histamine','alcohol intolerance'),(56,'yeast','alcohol intolerance'),(57,'chocolate','chocolate'),(58,'vinegar','others'),(59,'mayonnaise','salad dressing'),(60,'lactose','milk products'),(61,'milk solids','milk products'),(62,'cream','milk products'),(63,'sour cream','milk products'),(64,'lactose','milk products'),(65,'margarine','milk products'),(66,'cheese','milk products');
+
+/*Table structure for table `ehr_user_data` */
+
+DROP TABLE IF EXISTS `ehr_user_data`;
+
+CREATE TABLE `ehr_user_data` (
+  `ehr_id` int(11) NOT NULL,
+  `user_id` varchar(999) NOT NULL,
+  `first_name` varchar(999) DEFAULT NULL,
+  `last_name` varchar(999) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `height` float DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `gender` varchar(999) DEFAULT NULL,
+  `blood_type` varchar(999) DEFAULT NULL,
+  `blood_pressure_systolic` int(11) DEFAULT NULL,
+  `blood_pressure_diastolic` int(11) DEFAULT NULL,
+  `medical_condition` varchar(999) DEFAULT NULL,
+  `ethnicity` varchar(999) DEFAULT NULL,
+  PRIMARY KEY (`ehr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `ehr_user_data` */
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
