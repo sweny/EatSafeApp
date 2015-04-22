@@ -18,9 +18,11 @@ module.exports = function(app) {
 	});
 	
 	app.post('/register',function(req,res){
+		var fName = req.body.fName;
+		var lName = req.body.lName;
 		var email = req.body.username;
         var password = req.body.password;
-        register.register(email, password, function (found) {
+        register.register(fName, lName, email, password, function (found) {
 			console.log(found);
 			res.json(found);
 	});

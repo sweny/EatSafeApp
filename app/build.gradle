@@ -4,10 +4,16 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
+    packagingOptions {
+        exclude 'AndroidManifest.xml'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
     defaultConfig {
         applicationId "com.mastersproject.eatsafe.eatsafeapp"
         minSdkVersion 8
-        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -17,10 +23,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.android.support:support-v4:22.0.0'
+    compile project(':libs :tess-two')
+    compile files('F:/AndroidStudioProjects/EatSafeApp/libs/httpmime-4.3.3.jar')
+    compile files('F:/AndroidStudioProjects/EatSafeApp/libs/httpcore-4.3.2.jar')
 }

@@ -2,11 +2,32 @@
     <string name="app_name">Eat Safe</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_registration">Register</string>
-    <string name="title_activity_profile">My Profile</string>
+    <string name="title_activity_allergies">Allergies</string>
     <string name="title_activity_forgot_password">Password Reset</string>
     <string name="btnIntend">Scan Image</string>
     <string name="cannot">Cannot</string>
     <string name="album_name">EatSafe Images</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_scan">Scan Image</string>
+    <string name="title_activity_notification">Notification List</string>
+
+
+
+
+    <string name="title_activity_main">MainActivity</string>
+
+
+    <string name="title_Scan">Scan Image</string>
+    <string name="title_Notifications">Notifications</string>
+    <string name="title_Allergies">Allergies</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="hello_world">Hello world!</string>
+
+
+
 </resources>

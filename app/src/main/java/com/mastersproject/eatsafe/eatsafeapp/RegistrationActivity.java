@@ -27,12 +27,8 @@ import java.util.List;
 public class RegistrationActivity extends ActionBarActivity {
 
     ImageButton ibRegister;
-    EditText etUsername;
-    EditText etPassword;
-    EditText etConfirmPassword;
-    String username;
-    String password;
-    String confirmPassword;
+    EditText etUsername, etPassword, etConfirmPassword, etFname, etLname;
+    String username, password, confirmPassword, fName, lName;
     SharedPreferences pref;
 
     @Override
@@ -48,11 +44,15 @@ public class RegistrationActivity extends ActionBarActivity {
         ibRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                etFname     = (EditText)    findViewById(R.id.etFname);
+                etLname     = (EditText)    findViewById(R.id.etLname);
                 etUsername  = (EditText)    findViewById(R.id.etUsername);
                 etPassword  = (EditText)    findViewById(R.id.etPassword);
                 etConfirmPassword = (EditText) findViewById(R.id.etConfirmPassword);
                 username        = etUsername.getText()+"";
                 password        = etPassword.getText()+"";
+                fName           = etFname.getText()+"";
+                lName           = etLname.getText()+"";
                 confirmPassword = etConfirmPassword.getText()+"";
 
                 if (username.length() == 0 || password.length() == 0 || confirmPassword.length() ==0) {
@@ -61,8 +61,13 @@ public class RegistrationActivity extends ActionBarActivity {
                 } else if (!password.equals(confirmPassword)) {
                     Toast.makeText(RegistrationActivity.this, StringValues.PASS_CONFIRM_EQUAL, Toast.LENGTH_SHORT).show();
                     return;
+                } else if (fName.length() == 0 || lName.length() == 0) {
+                    Toast.makeText(RegistrationActivity.this, StringValues.fName_lName, Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("fName", fName));
+                params.add(new BasicNameValuePair("lName", lName));
                 params.add(new BasicNameValuePair("username", username));
                 params.add(new BasicNameValuePair("password", password));
                 ServerConnectivity sr = new ServerConnectivity();
@@ -71,14 +76,14 @@ public class RegistrationActivity extends ActionBarActivity {
                     try {
                         String jsonString = json.getString("response");
                         if (json.getBoolean("res")) {
-                            String token = json.getString("token");
+                            /*String token = json.getString("token");
                             String grav = json.getString("grav");
                             SharedPreferences.Editor edit = pref.edit();
                             //Storing Data using SharedPreferences
                             edit.putString("token", token);
                             edit.putString("grav", grav);
-                            edit.commit();
-                            startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
+                            edit.commit();*/
+                            startActivity(new Intent(RegistrationActivity.this, ScanActivity.class));
                             finish();
                         }
                         Toast.makeText(RegistrationActivity.this, jsonString, Toast.LENGTH_SHORT).show();

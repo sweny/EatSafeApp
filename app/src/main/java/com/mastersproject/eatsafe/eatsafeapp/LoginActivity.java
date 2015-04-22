@@ -81,13 +81,13 @@ public class LoginActivity extends ActionBarActivity {
                     try {
                         jsonString = json.getString("response");
                         if (json.getBoolean("res")) {
-                            String token = json.getString("token");
+                            /*String token = json.getString("token");
                             String grav = json.getString("grav");
                             SharedPreferences.Editor edit = pref.edit();
                             //Storing Data using SharedPreferences
                             edit.putString("token", token);
                             edit.putString("grav", grav);
-                            edit.commit();
+                            edit.commit();*/
                             startActivity(new Intent(LoginActivity.this, ScanActivity.class));
                             finish();
                         }

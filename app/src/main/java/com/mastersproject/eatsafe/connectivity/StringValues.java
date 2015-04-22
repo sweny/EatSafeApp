@@ -17,6 +17,7 @@ public class StringValues {
     public static final String USERNAME_PASS_BLANK_REG = "Username or Password/Confirm Password cannot be blank!";
     public static final String PASS_CONFIRM_EQUAL = "Password must be equal to Confirm Password!";
     public static final String USERNAME_PASS_BLANK = "Username or Password cannot be blank!";
+    public static final String fName_lName  = "First or Last name cannot be blank!";
 
 
 
