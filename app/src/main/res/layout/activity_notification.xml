@@ -1,44 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@mipmap/bckgrnd1"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.mastersproject.eatsafe.eatsafeapp.NotificationActivity">
+    tools:context=".MainActivity" >
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <Button
+            android:id="@+id/btnShowNotification"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/topBar">
+            android:text="Show Notification" >
+        </Button>
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Logo"
-                android:longClickable="false"
-                android:background="#000000"
-                android:src="@mipmap/logo_org1"
-                android:scaleType="centerCrop"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <ImageView
+        <Button
+            android:id="@+id/btnCancelNotification"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:visibility="visible"
-            android:id="@+id/imageView1" />
-
-
-
+            android:text="Cancel Notification" >
+        </Button>
+        
     </LinearLayout>
 
-
 </RelativeLayout>
+
