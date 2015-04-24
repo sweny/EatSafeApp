@@ -213,6 +213,20 @@ public class ScanActivity extends Activity {
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
 
+                /* Here we show how to start a new Activity that implements the Scandit
+         * SDK as a full screen scanner. The Activity can be found in the
+         * SampleFullScreenBarcodeActivity in this demo project. The old and
+         * new GUIs can both be easily opened this way, which is also shown in
+         * the aforementioned activity. */
+        Button activityButton = (Button) findViewById(R.id.btnscandit);
+        activityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ScanActivity.this,
+                        SampleFullScreenBarcodeActivity.class));
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
         } else {
@@ -300,82 +314,11 @@ public class ScanActivity extends Activity {
             btn.setClickable(false);
         }
     }
-    //Tessearact code
-/*    public String imageToStringConverter(String imagePath) {
-        System.out.println("imagePath : "+imagePath);
-
-        String data_path = Environment.getExternalStorageDirectory().toString()+"/";
-       // String path = baseDir.toString() + File.separator;
-        if (!(new File(data_path + "tessdata/eng.traineddata")).exists()) {
-            try {
-                AssetManager assetManager = getAssets();
-                String[] files = null;
-                files = assetManager.list("");
-                InputStream in = assetManager.open("tesseract/tessdata/eng.traineddata");
-                OutputStream out = new FileOutputStream(data_path+"tessdata/eng.traineddata");
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-            } catch (IOException e) {
-                Log.d("fail to copy trainedata" , e.toString());
-            }
+/*    @Override
+    public void onBackPressed() {
+        if (mBarcodePicker != null) {
+            mBarcodePicker.stopScanning();
         }
-        Bitmap image = BitmapFactory.decodeFile(imagePath);
-       // ScanActivity scanActivity = new ScanActivity();
-        //image = scanActivity.updateImage(imagePath, image);
-        TessBaseAPI baseApi = new TessBaseAPI();
-        baseApi.init(Environment.getExternalStorageDirectory().toString()+"/", "eng");
-        baseApi.setImage(image);
-        String recognizedText = baseApi.getUTF8Text();
-        //recognizedText=recognizedText.replaceAll("[^a-zA-Z0-9]", " ");
-        baseApi.end();
-        Log.d("recog", recognizedText);
-        return recognizedText;
-    }
-
-
-    public Bitmap updateImage(String imagePath, Bitmap bitmap){
-        System.out.println("Inside updateImage");
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(imagePath);
-        int exifOrientation = exif.getAttributeInt(
-                ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_NORMAL);
-
-        int rotate = 0;
-
-        switch (exifOrientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                rotate = 90;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                rotate = 180;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                rotate = 270;
-                break;
-        }
-
-        if (rotate != 0) {
-            int w = bitmap.getWidth();
-            int h = bitmap.getHeight();
-
-            // Setting pre rotate
-            Matrix mtx = new Matrix();
-            mtx.preRotate(rotate);
-
-            // Rotating Bitmap & convert to ARGB_8888, required by tess
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, false);
-        }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        return bitmap;
+        finish();
     }*/
 }

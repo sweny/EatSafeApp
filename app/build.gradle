@@ -24,7 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/', 'native-libs'] } }
 }
 
 dependencies {
@@ -32,6 +32,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.android.support:support-v4:22.0.0'
     compile project(':libs :tess-two')
-    compile files('F:/AndroidStudioProjects/EatSafeApp/libs/httpmime-4.3.3.jar')
-    compile files('F:/AndroidStudioProjects/EatSafeApp/libs/httpcore-4.3.2.jar')
+    compile files('C:/Users/Nikita/Documents/GitHub/EatSafeApp/libs/httpmime-4.3.3.jar')
+    compile files('C:/Users/Nikita/Documents/GitHub/EatSafeApp/libs/httpcore-4.3.2.jar')
+    compile files('C:/Users/Nikita/Documents/GitHub/EatSafeApp/libs/scanditsdk-android-4.4.2.jar')
 }

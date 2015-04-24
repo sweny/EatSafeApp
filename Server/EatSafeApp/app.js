@@ -5,7 +5,7 @@
 var express  = require('express');
 var connect = require('connect');
 var app      = express();
-var port     = 8081;
+var port     = 3000;
 
 // Configuration
 app.use(express.static(__dirname + '/public'));

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.mastersproject.eatsafe.connectivity.ServerConnectivity;
 import com.mastersproject.eatsafe.connectivity.StringValues;
 
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -53,6 +54,7 @@ public class LoginActivity extends ActionBarActivity {
         setTvSignUp();
         setTvForgotPass();
    }
+
 
     private void setLoginButton() {
         etUsername  = (EditText)    findViewById(R.id.etUsername);

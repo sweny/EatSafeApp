@@ -1,5 +1,6 @@
 var register = require('config/register');
 var login = require('config/login');
+var upcDecoder = require('config/upcDecoder');
 
 module.exports = function(app) {
 	
@@ -24,6 +25,15 @@ module.exports = function(app) {
         var password = req.body.password;
         register.register(fName, lName, email, password, function (found) {
 			console.log(found);
+			res.json(found);
+	});
+	});	
+
+	app.post('/decodeUpc',function(req,res){
+		console.log("in decodeUpc route");
+		var msg = req.body.upc_code;
+        upcDecoder.upcDecoder(msg, function (found) {
+			console.log("in decode UPC func "+found);
 			res.json(found);
 	});
 	});	

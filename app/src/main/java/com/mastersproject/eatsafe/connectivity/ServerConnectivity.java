@@ -83,11 +83,12 @@ public class ServerConnectivity {
     }
     JSONObject jobj;
     public JSONObject getJSON(String url, List<NameValuePair> params) {
-        Log.d("","coming here!");
+        Log.d("getJSON","coming here!");
         Params param = new Params(url,params);
         Request myTask = new Request();
         try{
             jobj= myTask.execute(param).get();
+            Log.d("getJSON","after here!");
         }catch (InterruptedException e) {
             e.printStackTrace();
         }catch (ExecutionException e){
