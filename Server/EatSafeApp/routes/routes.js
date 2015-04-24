@@ -28,11 +28,13 @@ module.exports = function(app) {
 			res.json(found);
 	});
 	});	
-
+	
 	app.post('/decodeUpc',function(req,res){
 		console.log("in decodeUpc route");
 		var msg = req.body.upc_code;
-        upcDecoder.upcDecoder(msg, function (found) {
+		var username = req.body.username;
+		console.log("username in routes.js "+username);
+        upcDecoder.upcDecoder(msg, username, function (found) {
 			console.log("in decode UPC func "+found);
 			res.json(found);
 	});

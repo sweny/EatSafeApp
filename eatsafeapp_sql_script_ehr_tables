@@ -54,22 +54,26 @@ DROP TABLE IF EXISTS `ehr_user_data`;
 
 CREATE TABLE `ehr_user_data` (
   `ehr_id` int(11) NOT NULL,
-  `user_id` varchar(999) NOT NULL,
-  `first_name` varchar(999) DEFAULT NULL,
-  `last_name` varchar(999) DEFAULT NULL,
+  `user_id` varchar(254) NOT NULL,
+  `first_name` varchar(254) DEFAULT NULL,
+  `last_name` varchar(254) DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
   `height` float DEFAULT NULL,
   `weight` int(11) DEFAULT NULL,
-  `gender` varchar(999) DEFAULT NULL,
-  `blood_type` varchar(999) DEFAULT NULL,
+  `gender` varchar(254) DEFAULT NULL,
+  `blood_type` varchar(254) DEFAULT NULL,
   `blood_pressure_systolic` int(11) DEFAULT NULL,
   `blood_pressure_diastolic` int(11) DEFAULT NULL,
-  `medical_condition` varchar(999) DEFAULT NULL,
-  `ethnicity` varchar(999) DEFAULT NULL,
-  PRIMARY KEY (`ehr_id`)
+  `medical_condition` varchar(254) DEFAULT NULL,
+  `ethnicity` varchar(254) DEFAULT NULL,
+  `allergy` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `ehr_user_data` */
+
+insert  into `ehr_user_data`(`ehr_id`,`user_id`,`allergy`) values (1,'sz@gmailcom','Lemon'),
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

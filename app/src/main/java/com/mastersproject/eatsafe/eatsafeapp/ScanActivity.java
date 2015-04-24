@@ -1,12 +1,16 @@
 package com.mastersproject.eatsafe.eatsafeapp;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,13 +22,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.mastersproject.eatsafe.OCRApiService.ApiService;
+import com.mastersproject.eatsafe.connectivity.ServerConnectivity;
+import com.mastersproject.eatsafe.connectivity.StringValues;
 import com.mastersproject.eatsafe.imageCapture.AlbumStorageDirFactory;
 import com.mastersproject.eatsafe.imageCapture.BaseAlbumDirFactory;
 import com.mastersproject.eatsafe.imageCapture.FroyoAlbumDirFactory;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +59,7 @@ public class ScanActivity extends Activity {
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
     static File imageStoreDirectory;
     public static Context appContext;
-    String _path;
+    public static String textRecognized;
 
     /* Photo album for this application */
     private String getAlbumName() {
@@ -212,8 +224,7 @@ public class ScanActivity extends Activity {
                 mTakePicOnClickListener,
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
-
-                /* Here we show how to start a new Activity that implements the Scandit
+/* Here we show how to start a new Activity that implements the Scandit
          * SDK as a full screen scanner. The Activity can be found in the
          * SampleFullScreenBarcodeActivity in this demo project. The old and
          * new GUIs can both be easily opened this way, which is also shown in
@@ -224,6 +235,8 @@ public class ScanActivity extends Activity {
             public void onClick(View v) {
                 startActivity(new Intent(ScanActivity.this,
                         SampleFullScreenBarcodeActivity.class));
+               // finish();
+                //showNotification();
             }
         });
 
@@ -243,8 +256,29 @@ public class ScanActivity extends Activity {
                     if (mCurrentPhotoPath.length() > 0){
                         ApiService apiService = new ApiService("SeP6qLUaQq");
                         Boolean result = apiService.convertToText("en",mCurrentPhotoPath);
-                        String textRecognized = apiService.getResponseText();
+                        textRecognized = apiService.getResponseText();
+
+                       // textRecognized = "Starbucks";
                         Log.d("result:"," "+result+" "+textRecognized);
+
+                        List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        params.add(new BasicNameValuePair("textRecognized", textRecognized));
+                        ServerConnectivity sr = new ServerConnectivity();
+                        String jsonString;
+                        JSONObject json = sr.getJSON(StringValues.PASSWORD_RESET_CODE_URL, params);
+
+                        if (json != null) {
+                            try {
+                                jsonString = json.getString("response");
+                                if (json.getBoolean("res")) {
+                                    Log.e("JSON", jsonString);
+                                }
+                            } catch (JSONException e){
+                                Log.d("Inside JSON Exception",e.getMessage());
+                            }
+                        }
+                        //ScanActivity scanActivity = new ScanActivity();
+                        showNotification();
                        /* String recognizedText = imageToStringConverter(mCurrentPhotoPath);
                         mCurrentPhotoPath = null;
                         Log.d("recognizedText",recognizedText);*/
@@ -314,11 +348,114 @@ public class ScanActivity extends Activity {
             btn.setClickable(false);
         }
     }
-/*    @Override
-    public void onBackPressed() {
-        if (mBarcodePicker != null) {
-            mBarcodePicker.stopScanning();
+    //Tessearact code
+/*    public String imageToStringConverter(String imagePath) {
+        System.out.println("imagePath : "+imagePath);
+
+        String data_path = Environment.getExternalStorageDirectory().toString()+"/";
+       // String path = baseDir.toString() + File.separator;
+        if (!(new File(data_path + "tessdata/eng.traineddata")).exists()) {
+            try {
+                AssetManager assetManager = getAssets();
+                String[] files = null;
+                files = assetManager.list("");
+                InputStream in = assetManager.open("tesseract/tessdata/eng.traineddata");
+                OutputStream out = new FileOutputStream(data_path+"tessdata/eng.traineddata");
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                Log.d("fail to copy trainedata" , e.toString());
+            }
         }
-        finish();
+        Bitmap image = BitmapFactory.decodeFile(imagePath);
+       // ScanActivity scanActivity = new ScanActivity();
+        //image = scanActivity.updateImage(imagePath, image);
+        TessBaseAPI baseApi = new TessBaseAPI();
+        baseApi.init(Environment.getExternalStorageDirectory().toString()+"/", "eng");
+        baseApi.setImage(image);
+        String recognizedText = baseApi.getUTF8Text();
+        //recognizedText=recognizedText.replaceAll("[^a-zA-Z0-9]", " ");
+        baseApi.end();
+        Log.d("recog", recognizedText);
+        return recognizedText;
+    }
+
+
+    public Bitmap updateImage(String imagePath, Bitmap bitmap){
+        System.out.println("Inside updateImage");
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(imagePath);
+        int exifOrientation = exif.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL);
+
+        int rotate = 0;
+
+        switch (exifOrientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotate = 90;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotate = 180;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotate = 270;
+                break;
+        }
+
+        if (rotate != 0) {
+            int w = bitmap.getWidth();
+            int h = bitmap.getHeight();
+
+            // Setting pre rotate
+            Matrix mtx = new Matrix();
+            mtx.preRotate(rotate);
+
+            // Rotating Bitmap & convert to ARGB_8888, required by tess
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, false);
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        return bitmap;
     }*/
+
+    public void showNotification(){
+        System.out.println("inside show notifi - ");
+        // define sound URI, the sound to be played when there's a notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        // intent triggered, you can add other intent for other actions
+        Intent intent = new Intent(ScanActivity.this, NotificationReceiver.class);
+        PendingIntent pIntent = PendingIntent.getActivity(ScanActivity.this, 0, intent, 0);
+        // this is it, we'll build the notification!
+        // in the addAction method, if you don't want any icon, just set the first param to 0
+        System.out.println("intent - "+intent);
+        System.out.println("pintent - "+pIntent);
+
+        Notification mNotification = new Notification.Builder(this)
+
+                .setContentTitle("Scan Result")
+                .setContentText("Here's the result of your scan!")
+                .setSmallIcon(R.drawable.ic_restaurant)
+                .setContentIntent(pIntent)
+                .setSound(soundUri)
+                .addAction(R.drawable.ic_restaurant, "View", pIntent)
+                .addAction(0, "Remind", pIntent)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // If you want to hide the notification after it was selected, do the code below
+        // myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, mNotification);
+    }
 }

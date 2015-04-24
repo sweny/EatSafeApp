@@ -13,6 +13,7 @@
     "mongodb": "*",
 	"mongodb-uri": "*",
 	"mongojs":"*",
-	"mysql":"*"
+	"mysql":"*",
+	"request":"*"
   }
 }
