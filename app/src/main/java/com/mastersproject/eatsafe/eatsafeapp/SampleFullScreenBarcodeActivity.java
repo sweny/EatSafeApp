@@ -1,9 +1,5 @@
 package com.mastersproject.eatsafe.eatsafeapp;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,7 +8,6 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -23,12 +18,20 @@ import com.mastersproject.eatsafe.connectivity.StringValues;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.ScanditSDKBarcodePicker;
 import com.mirasense.scanditsdk.ScanditSDKScanSettings;
-import com.mirasense.scanditsdk.interfaces.*;
+import com.mirasense.scanditsdk.interfaces.ScanditSDKCaptureListener;
+import com.mirasense.scanditsdk.interfaces.ScanditSDKCode;
+import com.mirasense.scanditsdk.interfaces.ScanditSDKOnScanListener;
+import com.mirasense.scanditsdk.interfaces.ScanditSDKScanSession;
+import com.mirasense.scanditsdk.interfaces.ScanditSDKSearchBarListener;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Example for a full-screen barcode scanning activity using the Scandit
@@ -77,7 +80,7 @@ public class SampleFullScreenBarcodeActivity
     // Your Scandit SDK App key is available via your Scandit SDK web account.
     public static final String sScanditSdkAppKey = "bGay3Izt7KzoUW3y/no9Kk9+CYMTHqiBfe3jiuHlACA";
 
-    
+
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,11 +208,43 @@ public class SampleFullScreenBarcodeActivity
         finish();
     }
 
+    /*public static void showNotification(String notificationMessage, Activity mActivity){
+
+        System.out.println("inside show notifi - ");
+        // define sound URI, the sound to be played when there's a notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        // intent triggered, you can add other intent for other actions
+        Intent intent = new Intent(mActivity, NotificationReceiver.class);
+        PendingIntent pIntent = PendingIntent.getActivity(mActivity, 0, intent, 0);
+        // this is it, we'll build the notification!
+        // in the addAction method, if you don't want any icon, just set the first param to 0
+        System.out.println("intent - "+intent);
+        System.out.println("pintent - "+pIntent);
+
+        Notification mNotification = new Notification.Builder(this)
+
+                .setContentTitle("Scan Result")
+                .setContentText("Here's the result of your scan!")
+                .setSmallIcon(R.drawable.ic_restaurant)
+                .setContentIntent(pIntent)
+                .setSound(soundUri)
+                .addAction(R.drawable.ic_restaurant, "View", pIntent)
+                .addAction(0, "Remind", pIntent)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // If you want to hide the notification after it was selected, do the code below
+        // myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, mNotification);
+    }*/
 
     static private class UIHandler extends Handler {
         public static final int SHOW_BARCODE = 0;
         public static final int SHOW_SEARCH_BAR_ENTRY = 1;
-        private WeakReference<SampleFullScreenBarcodeActivity> mActivity;
+        public WeakReference<SampleFullScreenBarcodeActivity> mActivity;
         UIHandler(SampleFullScreenBarcodeActivity activity) {
             mActivity = new WeakReference<SampleFullScreenBarcodeActivity>(activity);
         }
@@ -218,8 +253,8 @@ public class SampleFullScreenBarcodeActivity
             System.out.println("In handle message : msg is : "+msg.toString());
             switch (msg.what) {
                 case SHOW_BARCODE:
-                    showSplash(createMessage((ScanditSDKCode)msg.obj));
-                    //sendBarcode(createMessage((ScanditSDKCode)msg.obj));
+                    //showSplash(createMessage((ScanditSDKCode)msg.obj));
+                    sendBarcode(createMessage((ScanditSDKCode)msg.obj));
                      break;
                 case SHOW_SEARCH_BAR_ENTRY:
                     showSplash((String)msg.obj);
@@ -249,10 +284,13 @@ public class SampleFullScreenBarcodeActivity
             return message;
         }
 
-     /*   public void sendBarcode(String msg){
+        public void sendBarcode(String msg){
            System.out.println("in send barcode func , msg is"+ msg);
            List<NameValuePair> params = new ArrayList<NameValuePair>();
-           params.add(new BasicNameValuePair("upc_code", msg));
+            String[] upcCode = msg.split("\\n");
+            System.out.println("username - "+LoginActivity.username);
+           params.add(new BasicNameValuePair("upc_code", upcCode[0]));
+           params.add(new BasicNameValuePair("username", LoginActivity.username));
            JSONObject json = sr.getJSON(StringValues.GET_ITEM_INFO_URL, params);
            System.out.println("Json object in sendbarcode func is "+json);
            SampleFullScreenBarcodeActivity activity = mActivity.get();
@@ -261,12 +299,15 @@ public class SampleFullScreenBarcodeActivity
                    jsonString = json.getString("response");
                    if (json.getBoolean("res")) {
                        Toast.makeText(activity, jsonString, Toast.LENGTH_LONG).show();
+                       //showNotification(jsonString, activity);
+                       showSplash(jsonString);
                    }
                } catch (JSONException e) {
                    e.printStackTrace();
                }
            }
-        }*/
+        }
+
         private void showSplash(String msg) {
             System.out.println("in show splash method, msg here is "+msg);
             SampleFullScreenBarcodeActivity activity = mActivity.get();
@@ -292,5 +333,6 @@ public class SampleFullScreenBarcodeActivity
             });
             activity.mBarcodeSplash.requestFocus();
         }
+
     }
 }
