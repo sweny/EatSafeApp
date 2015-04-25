@@ -88,10 +88,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.3.3" level="project" />
+    <orderEntry type="library" exported="" name="1_httpmime-4.3.3" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.3.2" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="scanditsdk-android-4.4.2" level="project" />
+    <orderEntry type="library" exported="" name="1_scanditsdk-android-4.4.2" level="project" />
     <orderEntry type="module" module-name="tess-two" exported="" />
   </component>
 </module>

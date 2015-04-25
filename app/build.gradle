@@ -35,4 +35,6 @@ dependencies {
     compile files('C:/Users/Nikita/Documents/GitHub/EatSafeApp/libs/httpmime-4.3.3.jar')
     compile files('C:/Users/Nikita/Documents/GitHub/EatSafeApp/libs/httpcore-4.3.2.jar')
     compile files('C:/Users/Nikita/Documents/GitHub/EatSafeApp/libs/scanditsdk-android-4.4.2.jar')
+    compile files('C:/Users/Surbhi/Documents/GitHub/EatSafeApp/libs/scanditsdk-android-4.4.2.jar')
+    compile files('C:/Users/Surbhi/Documents/GitHub/EatSafeApp/libs/httpmime-4.3.3.jar')
 }

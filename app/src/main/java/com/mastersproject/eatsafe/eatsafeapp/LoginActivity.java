@@ -34,7 +34,10 @@ public class LoginActivity extends ActionBarActivity {
     ImageButton idLogin;
     TextView tvSignUp;
     TextView tvForgotPass;
-    String username, password, email_res_txt,jsonString;
+    static String username;
+    String password;
+    String email_res_txt;
+    String jsonString;
     Dialog reset;
     Button cont, cont_code, cancel, cancel1;
     List<NameValuePair> params;
