@@ -27,6 +27,7 @@ import com.mastersproject.eatsafe.connectivity.StringValues;
 import com.mastersproject.eatsafe.imageCapture.AlbumStorageDirFactory;
 import com.mastersproject.eatsafe.imageCapture.BaseAlbumDirFactory;
 import com.mastersproject.eatsafe.imageCapture.FroyoAlbumDirFactory;
+import com.mastersproject.eatsafe.notifications.NotificationReceiver;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

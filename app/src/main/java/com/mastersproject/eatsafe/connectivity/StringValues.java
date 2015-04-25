@@ -7,7 +7,7 @@ import android.util.Log;
  */
 public class StringValues {
 
-    private static final String http_url = "http://192.168.0.14:3000";
+    private static final String http_url = "http://192.168.1.102:3000";
 
     public static final String LOGIN_URL = http_url+"/login";
     public static final String REGISTER_URL = http_url+"/register";
