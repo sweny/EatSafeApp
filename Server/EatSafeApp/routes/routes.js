@@ -9,9 +9,12 @@ module.exports = function(app) {
 	});
 
 	app.post('/login',function(req,res){
-		var email = req.body.username;
-		console.log(email);
+		var email = req.body.email;
+		console.log ("req body is "+JSON.stringify(req.body));
+
+		console.log("email is "+email);
         var password = req.body.password;
+        console.log("password is "+password);
 		login.login(email, password, function (found) {
 			console.log(found);
 			res.json(found);

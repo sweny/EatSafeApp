@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["wordtree"]});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+          [ ['Phrases'],
+            ['coke contains sugar'],
+            ['coke has calories'],
+            ['coke contains sodium'],
+            ['coke contains artifical_flavors'],
+            ['coke has fats'],
+            ['coke doesnt_contain vitamins'],
+            ['coke doesnt_contain dietary_fiber'],
+            ['coke doesnt_contain protiens'],
+            ['coke contains carbohydrates']
+          ]
+        );
+
+        // has - ingredients, contains - not null and not 0 values, doesnt_contain -- null or 0 values 
+
+        //var item_name = data.item_name;
+        //var ingredients = data.nf_ingredient_statement;
+        //var nutrition_info = data.nutrition_info;
+
+        var options = {
+          wordtree: {
+            format: 'implicit',
+            word: 'coke'
+          }
+        };
+
+        var chart = new google.visualization.WordTree(document.getElementById('wordtree_basic'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="wordtree_basic" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
+
+

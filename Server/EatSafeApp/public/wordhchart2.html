@@ -1,0 +1,89 @@
+<html>
+  <head>
+     <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["wordtree"]});
+
+
+      google.setOnLoadCallback(drawSimpleNodeChart);
+      function drawSimpleNodeChart() {
+
+        $.getJSON('http://localhost:8008/tree_data', function(data) {
+
+        var stringified_data = JSON.stringify(data);
+        console.log ("tree data is "+stringified_data);
+        var item_name = data.item_name;
+        var ingredients_list = data.nf_ingredient_statement;
+        var nutrition_info = JSON.stringify(data.nutrient_info);
+        var nutrient_info = data.nutrient_info;
+
+        console.log("item name is "+ item_name);
+        console.log("item ingredients_list is "+ ingredients_list);
+        console.log("item nutrient_info is "+ nutrition_info);
+        console.log("hi "+nutrient_info.nf_calories);
+
+        console.log ("type is "+ typeof  ingredients_list);
+        var array = ingredients_list.split(',');
+
+        var nodeListData = new google.visualization.DataTable();
+
+        var parent = 0;
+        var key;
+        var counter = 4;
+
+
+        nodeListData.addColumn('number', 'id');
+        nodeListData.addColumn('string', 'childLabel');
+        nodeListData.addColumn('number', 'parent');
+        nodeListData.addColumn('number', 'size');
+        nodeListData.addColumn('number', 'color');
+        nodeListData.addRow([0, item_name, -1, 1, 0]);
+        nodeListData.addRow([1, 'contains', 0, 4, 1]);
+        nodeListData.addRow([2, 'has', 0, 5, 2]);
+        nodeListData.addRow([3, "doesn't_contain", 0, 1, 1]);
+
+        for (key in nutrient_info) {
+            if (nutrient_info.hasOwnProperty(key)) {
+                console.log("key and value is "+ key + ", "+ nutrient_info[key]);
+
+                if (nutrient_info[key] == null || nutrient_info[key] == 0) {
+                    parent = 3;
+                    nodeListData.addRow([counter, key, parent, 1, 2]);
+                    counter++;
+                }
+                else {
+                    parent = 1;
+                    nodeListData.addRow([counter, key, parent, 1, 1]);
+                    counter++;
+                }
+            }
+        }
+
+        for ( i= 0; i < array.length; i++) {
+
+            nodeListData.addRow([i+22, array[i], 2, 1, 0]);
+        }
+
+        var options = {
+          colors: ['black', 'orange', 'pink'],
+          maxFontSize : 28,
+          fontName: 'Times-Roman',
+          wordtree: {
+            format: 'explicit',
+            type: 'suffix'
+          }
+        };
+
+        var wordtree = new google.visualization.WordTree(document.getElementById('wordtree_explicit'));
+        wordtree.draw(nodeListData, options);
+    });
+
+      
+      }
+    </script>
+  </head>
+  <body>
+    <div id="wordtree_explicit" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
