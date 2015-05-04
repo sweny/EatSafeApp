@@ -72,10 +72,34 @@ CREATE TABLE `ehr_user_data` (
 
 /*Data for the table `ehr_user_data` */
 
-insert  into `ehr_user_data`(`ehr_id`,`user_id`,`allergy`) values (1,'sz@gmailcom','Lemon'),
+insert  into `ehr_user_data`(`ehr_id`,`user_id`, gender, `allergy`) values (1,'sz@gmailcom','F', 'Lemon')
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+create table nutritionChart (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	medical_condition varchar(254) DEFAULT NULL,
+	gender varchar(20) DEFAULT NULL,
+	carbohydrate float,
+	Sodium float,
+	Fiber float,
+	PRIMARY KEY (`id`)
+) 
+
+insert  into `nutritionChart`(`medical_condition`, gender,`carbohydrate`, Fiber) values ('diabetes','F',30,25);
+insert  into `nutritionChart`(`medical_condition`, gender,`carbohydrate`, Fiber) values ('diabetes','M',30,38);
+insert  into `nutritionChart`(`medical_condition`, Sodium) values ('Blood Pressure', 'M,F',1.5);
+
+
+ select medical_condition, carbohydrate, Sodium, Fiber from nutritionChart where medical_condition in (Select medical_condition from ehr_user_data where user_id= 'sz@gmail.com'), gender=;
+ 
+ 
+update nutritionChart set gender = 'Male, Female' where id = 3
+ 
+select medical_condition, carbohydrate, Sodium, Fiber from nutritionChart where medical_condition in ('diabetes') and gender like '%Male';
+
+update ehr_user_data set medical_condition = 'allergic_reactions';
